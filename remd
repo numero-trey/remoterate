@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+puts "Remoterate Daemon"
+
+require 'eventmachine'
+require 'logger'
+
+require_relative "lib/remoterate"
+require_relative "lib/remd_web"
+require_relative "lib/executor"
+
+config = Remoterate.get_config
+logger = Logger.new(STDOUT)
+executor = Executor.new logger: logger, config: config
+
+EM.run{
+  EM.start_server '0.0.0.0', config[:port], RemdWeb, config: config, logger: logger, executor: executor
+}

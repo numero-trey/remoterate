@@ -1,0 +1,3 @@
+{
+  "exec": "ruby test/test_app.rb"
+}
